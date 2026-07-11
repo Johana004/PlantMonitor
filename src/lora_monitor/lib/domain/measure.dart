@@ -34,7 +34,7 @@ class Measure {
       (json['light'] as num).toDouble(),
       (json['soilMoisture'] as num).toDouble(),
       json['sensorName'] as String,
-      Timestamp.fromDate(DateTime.parse(json['date'])));
+      Timestamp.fromDate(DateTime.now()));
 
   factory Measure.fromJson(Map<dynamic, dynamic> json) {
     return Measure(
