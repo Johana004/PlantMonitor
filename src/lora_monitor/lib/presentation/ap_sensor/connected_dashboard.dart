@@ -32,27 +32,32 @@ class _ConnectedDashboardState extends State<ConnectedDashboard> {
     }
     httpClient.close();
     print(messages);
-    if (messages.first != "error") {
-      List<Measure> lastMeasures = [];
-      for (var message in messages) {
-        print(message);
-        print(lastMeasures);
-        if (message == "/") {
-          if (measures.isNotEmpty) {
-            lastMeasures.add(measures.last);
-          }
-        } else {
-          message = message.replaceAll(";", "");
-          Map map = jsonDecode(message);
-          Measure measure = Measure.fromServer(map);
+    
+    if (messages.isNotEmpty && messages.first != "error") {
+      try {
+        // Parse the JSON array from the response
+        String jsonString = messages.join();
+        List<dynamic> jsonArray = jsonDecode(jsonString);
+        
+        for (var item in jsonArray) {
+          Map<String, dynamic> sensorData = item as Map<String, dynamic>;
+          // Add default values for fields not provided by the endpoint
+          sensorData['pressure'] = sensorData['pressure'] ?? 0.0;
+          sensorData['altitude'] = sensorData['altitude'] ?? 0.0;
+          sensorData['date'] = sensorData['date'] ?? DateTime.now().toIso8601String();
+          
+          Measure measure = Measure.fromServer(sensorData);
           measures.add(measure);
+          print('Added measure: ${measure.sensorName}');
         }
-      }
 
-      if (lastMeasures.isNotEmpty) {
-        for (var lastSensorMeasure in lastMeasures) {
-          chartRepo.addLastMeasure(lastSensorMeasure);
+        if (measures.isNotEmpty) {
+          for (var measure in measures) {
+            chartRepo.addLastMeasure(measure);
+          }
         }
+      } catch (e) {
+        print('Error parsing sensor data: $e');
       }
     }
   }

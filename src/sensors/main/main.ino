@@ -45,7 +45,7 @@ void handleGetAllData() {
     addSensor(sensors, "sensorTwo",   31, 81, 14, 87, -49, 88);
     addSensor(sensors, "sensorThree", 32, 82, 15, 86, -48, 87);
     addSensor(sensors, "sensorFour",  29, 78, 12, 84, -47, 86);
-    addSensor(sensors, "sensorFive",  28, 76, 11, 82, -46, 85);
+    
 
     String response;
     serializeJson(doc, response);
