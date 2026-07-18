@@ -1,7 +1,7 @@
 
 ## Data Design
 
-In our LoRa Monitor project, we leverage Firebase as our backend solution for data management. Firebase's key advantage lies in its robust support for offline data synchronization within our mobile application, enabling uninterrupted data collection even when the device temporarily loses internet connectivity.
+In our Plant Monitor project, we leverage Firebase as our backend solution for data management. Firebase's key advantage lies in its robust support for offline data synchronization within our mobile application, enabling uninterrupted data collection even when the device temporarily loses internet connectivity.
 
 ![Data Design](data_design.svg)
 
